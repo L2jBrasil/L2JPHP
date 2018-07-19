@@ -139,6 +139,11 @@ class Singleton
         }
     }
 
+    public static function selectedDatabaseName()
+    {
+        return self::$_dbname;
+    }
+
     /**
      * @param $sql
      * @return mixed
