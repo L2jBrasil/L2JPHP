@@ -1,0 +1,39 @@
+{
+  "name": "L2jBrasil/L2JPHP",
+  "type": "library",
+  "description": "A PHP Framework for standard L2J application development.",
+  "keywords": [
+    "L2jBrasil",
+    "L2JBR",
+    "l2j"
+  ],
+  "license": "MIT",
+  "private": true,
+  "authors": [
+    {
+      "name": "Leonan Carvalho (Grundor)",
+      "email": "webmaster@l2jbrasil.com",
+      "homepage": "https://www.l2jbrasil.com/index.php?/profile/3-grundor/"
+    },
+    {
+      "name": "Contributors",
+      "homepage": "https://github.com/L2jBrasil/L2JPHP/graphs/contributors"
+    }
+  ],
+  "support": {
+    "issues": "https://github.com/L2jBrasil/L2JPHP/issues"
+  },
+  "require": {
+    "php": ">=5.6.21",
+    "ext-pdo": "*",
+    "ext-pdo-mysql": "*"
+  },
+  "autoload": {
+    "files": [
+      "src/constants.php"
+    ],
+    "psr-0": {
+      "L2jBrasil\\L2JPHP": "src/"
+    }
+  }
+}

@@ -5,7 +5,7 @@
  * @license MIT
  */
 
-namespace L2jBrasil\L2JPHP\Models;
+namespace L2jBrasil\L2JPHP;
 
 
 use L2jBrasil\L2JPHP\Utils\FileSystem;

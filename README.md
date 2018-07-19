@@ -8,7 +8,7 @@ A PHP Framework for standard L2J application development.
 ```php
 <?php
 
-$CharactersModel = \L2jBrasil\L2JPHP\Models\ModelFactory::build('Players/Characters');
+$CharactersModel = \L2jBrasil\L2JPHP\ModelFactory::build('Players/Characters');
 $CharactersModel->get('ID');
 $CharactersModel->update('ID', ["name"=> "Grundor"]);
 $CharactersModel->ban('ID');
