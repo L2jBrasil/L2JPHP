@@ -15,3 +15,6 @@ $CharactersModel->ban('ID');
 
 
 ```
+
+
+# This repository is an work in progress (WIP) use with caution
