@@ -51,7 +51,9 @@ abstract class AbstractBaseModel extends AbstractSQL
         }
 
 
-        return $sql->query()->FetchAll();
+        $result = $sql->query()->FetchAll();
+
+        return $this->translateDataObj($result, true); //"Flip" back the result to harmonized structure
     }
 
     /**
@@ -107,11 +109,14 @@ abstract class AbstractBaseModel extends AbstractSQL
      * name -> char_name, etc...
      * Traduz uma coluna de um model
      * @param $colName
+     * @param bool $reverse
      * @return mixed
      */
-    public function translate($colName)
+    public function translate($colName, $reverse = false)
     {
-        if (array_key_exists($colName, $this->_tableMap)) {
+        $dictionary = ($reverse) ? array_flip($this->_tableMap) : $this->_tableMap;
+
+        if (array_key_exists($colName, $dictionary)) {
             return $this->_tableMap[$colName];
         }
         return $colName;
@@ -122,9 +127,18 @@ abstract class AbstractBaseModel extends AbstractSQL
      * @param array $colums
      * @return array
      */
-    public function translateAll(array $colums)
+    public function translateAll(array $colums, $reverse = false)
     {
-        return array_map(array($this, 'translate'), $colums);
+        if ($reverse) {
+            $modelInstance = $this;
+            return array_map(function ($colName) use ($modelInstance) {
+                return $modelInstance->translate($colName, true);
+            }, $colums);
+
+        } else {
+            return array_map(array($this, 'translate'), $colums);
+        }
+
     }
 
 
@@ -132,11 +146,11 @@ abstract class AbstractBaseModel extends AbstractSQL
      * @param array $data
      * @return array
      */
-    public function translateDataObj(array $dados)
+    public function translateDataObj(array $dados, $reverse = false)
     {
         $translated = [];
         foreach ($dados as $key => $value) {
-            $translated[$key] = $this->translate($key);
+            $translated[$key] = $this->translate($key, $reverse);
         }
         return $translated;
     }

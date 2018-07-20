@@ -1,9 +1,8 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: Leonan
- * Date: 19/07/2018
- * Time: 16:57
+ * Copyright (C) 2018 L2JBrasil
+ * @autor Leonan Carvalho
+ * @license MIT
  */
 
 namespace L2jBrasil\L2JPHP\Models\Filter;

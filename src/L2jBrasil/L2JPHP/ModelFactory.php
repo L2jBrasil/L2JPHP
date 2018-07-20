@@ -56,26 +56,26 @@ class ModelFactory
 
     private static function getL2Version()
     {
-        if (!defined('L2JBR_L2Version')) {
+        if (!defined('L2JBR_L2VERSION')) {
             throw  new \RuntimeException("The Distribuition is not defined. Please define L2JBR_DIST constant. Eg. Interlude ");
         }
 
         //Valida se a pasta Models\Dist\Interlude existe
         $versionDir = FileSystem::normalizePath(FileSystem::mountDir(
             array(dirname(__FILE__),
-                "Dist", L2JBR_L2Version)));
+                "Dist", L2JBR_L2VERSION)));
 
 
         if (!is_dir($versionDir)) {
-            throw  new \RuntimeException("The L2 Version " . L2JBR_L2Version . " is not implemented yet. To know how to ask for a new implementation go to {URL_TO_PULL_REQUEST_ETC} ");
+            throw  new \RuntimeException("The L2 Version " . L2JBR_L2VERSION . " is not implemented yet. To know how to ask for a new implementation go to {URL_TO_PULL_REQUEST_ETC} ");
         }
-        return L2JBR_L2Version;
+        return L2JBR_L2VERSION;
     }
 
     private static function getDist()
     {
-        if (!defined('L2JBR_L2Version')) {
-            throw  new \RuntimeException("The L2 Version is not defined. Please define L2JBR_L2Version constant. Eg. L2JSERVER ");
+        if (!defined('L2JBR_L2VERSION')) {
+            throw  new \RuntimeException("The L2 Version is not defined. Please define L2JBR_L2VERSION constant. Eg. L2JSERVER ");
         }
 
         //Valida se a pasta Models\Dist\Interlude\L2JSERVER existe
