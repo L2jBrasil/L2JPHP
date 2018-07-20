@@ -14,12 +14,20 @@ A PHP Framework for harmonized L2J application development.
 ```php
 <?php
 
-//$CharactersModel = new \L2jBrasil\L2JPHP\Models\Dist\Interlude\L2JSERVER\Players\Characters();
-$CharactersModel = \L2jBrasil\L2JPHP\ModelFactory::build('Players/Characters');
+$CharactersModel = new \L2jBrasil\L2JPHP\Models\Dist\Interlude\L2JSERVER\Players\Characters();
+//$CharactersModel = \L2jBrasil\L2JPHP\ModelFactory::build('Players/Characters');
 $CharactersModel->get('ID');
 $CharactersModel->update('ID', ["name"=> "Grundor"]);
 $CharactersModel->ban('ID');
-$CharactersModel->all(['name','level'],false,'level DESC ',10); //Top10 Level
+$CharactersModel->all(['name','level'],false,10,'level'); //Retorna os 10 personagens com maior level.
+
+//Advanced:
+$CharactersModel->select(['character.id','account.name'])
+    ->join(\L2jBrasil\L2JPHP\ModelFactory::build('Players/Account'))
+    ->orderby('level')
+    ->limit(100)
+    ->query()
+    ->FetchAll();
 
 
 ```
