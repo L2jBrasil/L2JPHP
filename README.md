@@ -8,14 +8,21 @@ A PHP Framework for harmonized L2J application development.
 ![L2JBrDevelopers](http://i.imgur.com/bhBwp7U.jpg "Desenvolvido por Macacos altamente treinados")
 
 
+## Official Topic: https://www.l2jbrasil.com/index.php?/topic/126388-l2jphp-one-library-to-rule-them-all/
 
 
+
+
+## Usage: 
 
 ```php
 <?php
 
-$CharactersModel = new \L2jBrasil\L2JPHP\Models\Dist\Interlude\L2JSERVER\Players\Characters();
-//$CharactersModel = \L2jBrasil\L2JPHP\ModelFactory::build('Players/Characters');
+define('L2JBR_DIST', "L2JSERVER"); //Qual a distribuição?
+define('L2JBR_L2VERSION', "Interlude"); //Qual a versão do jogo?
+
+//$CharactersModel = new \L2jBrasil\L2JPHP\Models\Dist\Interlude\L2JSERVER\Players\Characters(); //Compatible only with L2JSERVER databases
+$CharactersModel = \L2jBrasil\L2JPHP\ModelFactory::build('Players/Characters'); //Compatible for all suported modules
 $CharactersModel->get('ID');
 $CharactersModel->update('ID', ["name"=> "Grundor"]);
 $CharactersModel->ban('ID');
