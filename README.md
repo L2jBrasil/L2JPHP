@@ -18,8 +18,8 @@ A PHP Framework for harmonized L2J application development.
 ```php
 <?php
 
-define('L2JBR_DIST', "L2JSERVER"); //Qual a distribuição?
-define('L2JBR_L2VERSION', "Interlude"); //Qual a versão do jogo?
+define('L2JBR_DIST', "L2JSERVER"); //What is the distribution?
+define('L2JBR_L2VERSION', "Interlude"); //What is the chronicle? Kamael, God, Classic, any generec name.
 
 //$CharactersModel = new \L2jBrasil\L2JPHP\Models\Dist\Interlude\L2JSERVER\Players\Characters(); //Compatible only with L2JSERVER databases
 $CharactersModel = \L2jBrasil\L2JPHP\ModelFactory::build('Players/Characters'); //Compatible for all suported modules
