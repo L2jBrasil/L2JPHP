@@ -25,8 +25,7 @@
   },
   "require": {
     "php": ">=5.6.21",
-    "ext-pdo": "*",
-    "ext-pdo-mysql": "*"
+    "ext-pdo_mysql": "*"
   },
   "autoload": {
     "files": [
