@@ -6,7 +6,7 @@ namespace L2jBrasil\L2JPHP\Connection;
 
 class Container extends \stdClass
 {
-    use \L2jBrasil\L2JPHP\Singleton;
+    use Singleton;
 
     public static $_intances = [];
 

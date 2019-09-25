@@ -28,9 +28,6 @@
     "ext-pdo_mysql": "*"
   },
   "autoload": {
-    "files": [
-      "src/constants.php"
-    ],
     "psr-0": {
       "L2jBrasil\\L2JPHP": "src/"
     }
