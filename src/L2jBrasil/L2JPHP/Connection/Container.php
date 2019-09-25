@@ -11,8 +11,8 @@ class Container extends \stdClass
     public static $_intances = [];
 
 
-    public static function save($hash, $obj){
-        self::$_intances[$hash] = $obj;
+    public static function save($hash, &$obj){
+        self::$_intances[$hash] = &$obj;
     }
     public static function get($hash){
         return self::$_intances[$hash] ?? null;

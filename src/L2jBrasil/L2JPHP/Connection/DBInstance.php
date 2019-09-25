@@ -94,7 +94,7 @@ class DBInstance
         }
 
         if (!(self::$connection == null || !(self::$connection instanceof PDOFactory))) {
-            $dsn = self::$_driver . ":host=" . self::$_host . self::$_port . ";dbname=" . self::$_dbname;
+            $dsn = self::$_driver . ":host=" . self::$_host . ":" . self::$_port . ";dbname=" . self::$_dbname;
             self::$connection = new PDOFactory($dsn, self::$_user, self::$_pwd);
             self::$connection->connect();
 
