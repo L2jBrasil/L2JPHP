@@ -8,14 +8,29 @@
 namespace L2jBrasil\L2JPHP;
 
 
+use Application\DB\Controllers\AbstractModel;
 use L2jBrasil\L2JPHP\Utils\FileSystem;
 
 class ModelFactory
 {
 
     /**
+     * @var ConfigSet
+     */
+    private static $_configset;
+
+    public function __construct(ConfigSet $configset = null)
+    {
+        if(!$configset){
+            $configset = ConfigSet::getDefaultInstance();
+        }
+
+        self::$_configset = $configset;
+    }
+
+    /**
      * @param $modelName
-     * @return AbstractBaseModel
+     * @return AbstractModel
      */
     public static function build($modelName)
     {
@@ -23,18 +38,18 @@ class ModelFactory
         $ClassName = self::getClassName($modelName);
 
         if (!class_exists($ClassName)) {
-            $TryStdClass = self::getClassName($modelName, "Generic", "Generic");
+            $TryStdClass = self::getClassName($modelName);
             if (class_exists($TryStdClass)) {
-                $ClassInstance = new $TryStdClass();
+                $ClassInstance = new $TryStdClass(self::$_configset);
             } else {
                 throw  new \RuntimeException("The model '$modelName'  not exists");
             }
         } else {
-            $ClassInstance = new $ClassName();
+            $ClassInstance = new $ClassName(self::$_configset);
         }
 
 
-        return new $ClassInstance();
+        return $ClassInstance;
     }
 
     private static function getClassName($modelName, $l2version = null, $distribuition = null)
@@ -56,39 +71,44 @@ class ModelFactory
 
     private static function getL2Version()
     {
-        if (!defined('L2JBR_L2VERSION')) {
-            throw  new \RuntimeException("The Distribuition is not defined. Please define L2JBR_DIST constant. Eg. Interlude ");
+        if (!self::$_configset->_version) {
+            throw  new \RuntimeException("The Distribuition is not defined. Please define L2JBR_L2VERSION constant. Eg. Interlude ");
         }
 
         //Valida se a pasta Models\Dist\Interlude existe
         $versionDir = FileSystem::normalizePath(FileSystem::mountDir(
-            array(dirname(__FILE__),
-                "Dist", L2JBR_L2VERSION)));
+            array(dirname(__FILE__),"Models",
+                "Dist", self::$_configset->_version)));
 
 
         if (!is_dir($versionDir)) {
-            throw  new \RuntimeException("The L2 Version " . L2JBR_L2VERSION . " is not implemented yet. To know how to ask for a new implementation go to {URL_TO_PULL_REQUEST_ETC} ");
+            throw  new \RuntimeException("The L2 Version " . self::$_configset->_version . " is not implemented yet. To know how to ask for a new implementation go to {URL_TO_PULL_REQUEST_ETC} ");
         }
-        return L2JBR_L2VERSION;
+        return self::$_configset->_version;
     }
 
     private static function getDist()
     {
-        if (!defined('L2JBR_L2VERSION')) {
-            throw  new \RuntimeException("The L2 Version is not defined. Please define L2JBR_L2VERSION constant. Eg. L2JSERVER ");
+        if (!self::$_configset->_dist) {
+            throw  new \RuntimeException("The L2 Version is not defined. Please define L2JBR_DIST constant. Eg. L2JSERVER ");
         }
 
         //Valida se a pasta Models\Dist\Interlude\L2JSERVER existe
         $distDir = FileSystem::normalizePath(FileSystem::mountDir(
-            array(dirname(__FILE__),
-                "Dist", self::getL2Version(), L2JBR_DIST)));
+            array(dirname(__FILE__),"Models",
+                "Dist", self::getL2Version(), self::$_configset->_dist)));
 
 
         if (!is_dir($distDir)) {
-            throw  new \RuntimeException("The dist " . L2JBR_DIST . " is not implemented yet. To know how to ask for a new implementation go to {URL_TO_PULL_REQUEST_ETC} ");
+            throw  new \RuntimeException("The dist " . self::$_configset->_dist . " is not implemented yet. To know how to ask for a new implementation go to {URL_TO_PULL_REQUEST_ETC} ");
         }
 
-        return L2JBR_DIST;
+        return self::$_configset->_dist;
     }
+
+    private static function getConfigset(){
+        ConfigSet::getInstance();
+    }
+
 
 }

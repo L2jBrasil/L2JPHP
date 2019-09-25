@@ -9,11 +9,14 @@
 namespace L2jBrasil\L2JPHP\Models;
 
 
-use L2jBrasil\L2JPHP\Connection\Singleton;
+use L2jBrasil\L2JPHP\ConfigSet;
+use L2jBrasil\L2JPHP\Connection\DBInstance;
 
 class AbstractSQL
 {
 
+
+    private  $config = null;
     protected $_table;
     protected $_primary = "id";
 
@@ -36,9 +39,17 @@ class AbstractSQL
     private $_tableCols = null;
     private $_tableSchema = null;
 
-    public function __construct()
+    /**
+     * AbstractSQL constructor.
+     * @param ConfigSet $config
+     *
+     */
+    public function __construct(ConfigSet $configset = null)
     {
-
+        if(!$configset){
+            $configset = ConfigSet::getDefaultInstance();
+        }
+        $this->config = $configset;
     }
 
     /**
@@ -58,7 +69,7 @@ class AbstractSQL
     }
 
     /**
-     * @return Singleton
+     * @return DBInstance
      */
     public function getDB()
     {
@@ -73,7 +84,7 @@ class AbstractSQL
      */
     private function getDbEnginer()
     {
-        return Singleton::getInstance();
+        return DBInstance::getInstance($this->config);
     }
 
     /**
