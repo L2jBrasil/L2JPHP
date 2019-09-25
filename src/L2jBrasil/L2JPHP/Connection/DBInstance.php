@@ -219,7 +219,7 @@ class DBInstance
      * @param $str
      * @return mixed
      */
-    private function safeString($str)
+    private static function safeString($str)
     {
         return str_replace(self::$configSet->_dbPwd, "**********", $str);
     }
