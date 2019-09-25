@@ -244,10 +244,11 @@ class DBInstance
     {
         $hash = $configSet::hash();
         if (!self::$instance || $renew) {
-            Container::save(self::$configSet, new DBInstance($configSet));
-            self::$instance = null;
+            self::$instance =  new DBInstance($configSet);
+            Container::save($hash,self::$instance);
+        }else{
+            self::$instance = Container::get($hash);
         }
-        self::$instance = Container::get($hash);
         return self::$instance;
     }
 
