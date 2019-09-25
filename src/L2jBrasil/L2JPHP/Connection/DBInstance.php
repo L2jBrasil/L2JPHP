@@ -221,12 +221,7 @@ class DBInstance
      */
     private function safeString($str)
     {
-        if (defined(L2JBR_DB_PWD)) {
-            return str_replace(L2JBR_DB_PWD, "**********", $str);
-        }
-
-        return $str;
-
+        return str_replace(self::$configSet->_dbPwd, "**********", $str);
     }
 
     /**
