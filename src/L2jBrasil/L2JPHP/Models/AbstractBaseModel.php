@@ -153,7 +153,7 @@ abstract class AbstractBaseModel extends AbstractSQL
             if(is_object($value)||is_array($value)){
                 $translated[$key] = $this->translateDataObj($value,$reverse);
             }else{
-                $translated[$key] = $this->translate($key, $reverse);
+                $translated[$this->translate($key, $reverse)] = $value;
             }
 
         }

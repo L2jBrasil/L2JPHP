@@ -5,7 +5,7 @@
  * @license MIT
  */
 
-namespace L2jBrasil\L2JPHP\Models\Dist\Interlude\L2jMobius7\Players;
+namespace L2jBrasil\L2JPHP\Models\Dist\Interlude\L2jMobius\Players;
 
 
 use L2jBrasil\L2JPHP\Models\AbstractBaseModel;
