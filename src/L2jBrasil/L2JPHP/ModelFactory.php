@@ -82,7 +82,7 @@ class ModelFactory
 
 
         if (!is_dir($versionDir)) {
-            throw  new \RuntimeException("The L2 Version " . self::$_configset->_version . " is not implemented yet. To know how to ask for a new implementation go to {URL_TO_PULL_REQUEST_ETC} ");
+            throw  new \RuntimeException("The dist " . self::$_configset->_dist . " is not implemented yet. please check {$versionDir} To know how to ask for a new implementation go to {URL_TO_PULL_REQUEST_ETC} ");
         }
         return self::$_configset->_version;
     }
@@ -100,7 +100,7 @@ class ModelFactory
 
 
         if (!is_dir($distDir)) {
-            throw  new \RuntimeException("The dist " . self::$_configset->_dist . " is not implemented yet. To know how to ask for a new implementation go to {URL_TO_PULL_REQUEST_ETC} ");
+            throw  new \RuntimeException("The dist " . self::$_configset->_dist . " is not implemented yet. please check {$distDir} To know how to ask for a new implementation go to {URL_TO_PULL_REQUEST_ETC} ");
         }
 
         return self::$_configset->_dist;
