@@ -159,4 +159,42 @@ abstract class AbstractBaseModel extends AbstractSQL
         }
         return $translated;
     }
+
+    /**
+     * Abtract function to check if value exist by given column
+     * @param $col
+     * @param $value
+     * @return mixed
+     *
+     */
+    public function exists($col, $value)
+    {
+        $col = $this->translate($col);
+
+        return $this->select($col)
+            ->where("{$col} == '{$value}''")
+            ->query()
+            ->Fetch();
+    }
+
+    /**
+     * Abtract function to check if value is unique
+     * @param $col
+     * @param $value
+     * @return mixed
+     */
+    public function checkUnique($col, $value)
+    {
+        $col = $this->translate($col);
+
+
+        return $this->select([$col, "count(*) as Count"])
+            ->where("{$col} == '{$value}''")
+            ->groupby($col)
+            ->having("count(*) > 1")
+            ->query()
+            ->Fetch();
+    }
+
+
 }
