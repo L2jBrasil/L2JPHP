@@ -33,4 +33,9 @@ class Accounts extends AbstractBaseModel implements \L2jBrasil\L2JPHP\Models\Int
             "access_level" => -1
         ]);
     }
+
+    public function register($login, $pass, $data = [])
+    {
+        // TODO: Implement register() method.
+    }
 }

@@ -17,17 +17,28 @@ class Accounts extends AbstractBaseModel implements \L2jBrasil\L2JPHP\Models\Int
     protected $_table = 'accounts';
     protected $_primary = 'login';
 
-
+    /**
+     * @var array
+     */
     protected $_tableMap = [
         "login" => "login",
         "password" => "password",
         "lastactive" => "lastactive",
-        "access_level" => "access_level",
+        "access_level" => "accessLevel",
         "lastIP" => "lastIP",
-        "lastServer" => "lastServer"
+        "lastServer" => "lastServer",
     ];
-
-
+    /*
+    Columns:
+    login varchar(45) PK
+    password varchar(45)
+    email varchar(255)
+    created_time timestamp
+    lastactive bigint(13) UN
+    accessLevel tinyint(4)
+    lastIP char(15)
+    lastServer tinyint(4)
+    */
     /**
      * @param $id
      * @return bool|AbstractSQL|mixed
@@ -49,18 +60,36 @@ class Accounts extends AbstractBaseModel implements \L2jBrasil\L2JPHP\Models\Int
      */
     public function login($login, $password)
     {
-        $pass1 = base64_encode(pack('H*', sha1(trim($password))));
-        $pass2 = base64_encode(hash('whirlpool', trim($password), true));
+        $login = $this->quote($login);
+        $pass1 = $this->quote(base64_encode(pack('H*', sha1(trim($password)))));
+        $pass2 = $this->quote(base64_encode(hash('whirlpool', trim($password), true)));
 
 
         $loginCol = $this->translate("login");
         $passwordCol = $this->translate("password");
-        $account = $this->select()
-            ->where("{$loginCol} == '{$login}'  AND ({$passwordCol} = '{$pass1}' OR {$passwordCol} = '{$pass2}')")
+
+        $account = $this->select("*")
+            ->where("{$loginCol} = {$login}  AND ({$passwordCol} = {$pass1} OR {$passwordCol} = {$pass2})")
             ->query()
             ->Fetch();
 
-        return $account;
+        $success = $account != null;
+
+        if ($success) {
+            $this->update($login, [
+                "lastIP" => $_SERVER['REMOTE_ADDR']
+            ]);
+        }
+
+        return $success;
     }
 
+    public function register($login, $pass, $data = [])
+    {
+        // TODO: Implement register() method.
+
+        //$sqlregister = "INSERT INTO `accounts` (`login`, `password`, `email`, `lastIP`) VALUES ('".$account."','".$password."','".$email."','".$_SERVER['REMOTE_ADDR']."')";
+
+
+    }
 }

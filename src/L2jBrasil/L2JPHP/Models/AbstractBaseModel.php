@@ -8,7 +8,9 @@
 namespace L2jBrasil\L2JPHP\Models;
 
 
+use Exception;
 use L2jBrasil\L2JPHP\Models\Filter\QueryFilter;
+use PDO;
 
 abstract class AbstractBaseModel extends AbstractSQL
 {
@@ -194,6 +196,20 @@ abstract class AbstractBaseModel extends AbstractSQL
             ->having("count(*) > 1")
             ->query()
             ->Fetch();
+    }
+
+
+    /**
+     * @param $string
+     * @param int $parameter_type
+     * @return string
+     * @throws Exception
+     *
+     */
+    public function quote($string, $parameter_type = PDO::PARAM_STR)
+    {
+        $conn = $this->getDB()->getConn()->connection();
+        return $conn->quote($string);
     }
 
 

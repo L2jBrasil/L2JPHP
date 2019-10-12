@@ -19,4 +19,6 @@ interface Accounts
     public function update($id, $data);
 
     public function ban($id);
+
+    public function register($login, $pass, $data = []);
 }
