@@ -56,7 +56,7 @@ class Accounts extends AbstractBaseModel implements \L2jBrasil\L2JPHP\Models\Int
         $loginCol = $this->translate("login");
         $passwordCol = $this->translate("password");
         $account = $this->select()
-            ->where("{$loginCol} == {$login}  AND ({$passwordCol} = '{$pass1}' OR {$passwordCol} = '{$pass2}')")
+            ->where("{$loginCol} == '{$login}'  AND ({$passwordCol} = '{$pass1}' OR {$passwordCol} = '{$pass2}')")
             ->query()
             ->Fetch();
 
