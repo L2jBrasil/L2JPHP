@@ -9,7 +9,11 @@
 namespace L2jBrasil\L2JPHP\Connection;
 
 
+use Exception;
 use L2jBrasil\L2JPHP\ConfigSet;
+use PDOException;
+use PDOStatement;
+use RuntimeException;
 
 class DBInstance
 {
@@ -74,7 +78,7 @@ class DBInstance
     /**
      * Prepara a SQl para ser executada posteriormente
      * @param $sql
-     * @return \PDOStatement
+     * @return PDOStatement
      */
     public static function prepare($sql)
     {
@@ -93,7 +97,7 @@ class DBInstance
             self::$connection == null;
         }
 
-        if (!(self::$connection == null || !(self::$connection instanceof PDOFactory))) {
+        if (self::$connection == null || !(self::$connection instanceof PDOFactory)) {
             $dsn = self::$_driver . ":host=" . self::$_host . ":" . self::$_port . ";dbname=" . self::$_dbname;
             self::$connection = new PDOFactory($dsn, self::$_user, self::$_pwd);
             self::$connection->connect();
@@ -104,10 +108,13 @@ class DBInstance
                     self::selectDatabase(self::$_dbname);
                 }
             } else {
-                throw new \RuntimeException("Unable to connect to primary database.", 500, null);
+                throw new RuntimeException("Unable to connect to primary database.", 500, null);
             }
         }
 
+        if (!self::$connection) {
+            throw new Exception("Error to connect database");
+        }
 
         return self::$connection;
     }
@@ -209,7 +216,7 @@ class DBInstance
 
                 die(self::safeString($error['message']) . " in " . $error['file'] . "[" . $error['line'] . "]");
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             die(self::safeString($e->getMessage()) . " in " . $e->getFile() . "[" . $e->getLine() . "]" . PHP_EOL . self::safeString($e->getTraceAsString()));
         }
     }
@@ -261,7 +268,7 @@ class DBInstance
     {
         try {
             self::getConn()->query("SELECT 1;")->execute();
-        } catch (\PDOException $e) {
+        } catch (PDOException $e) {
             if ($e->getCode() != 'HY000' || !stristr($e->getMessage(), 'server has gone away')) {
                 throw $e;
             }
@@ -280,7 +287,7 @@ class DBInstance
             gc_collect_cycles();
             self::$connection = self::getConn(true);
         } else {
-            throw new \RuntimeException("Can't Reconnect with active transactions");
+            throw new RuntimeException("Can't Reconnect with active transactions");
         }
     }
 
