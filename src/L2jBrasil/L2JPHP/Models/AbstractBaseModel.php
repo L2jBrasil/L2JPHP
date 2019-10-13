@@ -95,7 +95,11 @@ abstract class AbstractBaseModel extends AbstractSQL
     public function update($id, $dados)
     {
         $dados = (array)$this->translateDataObj((array)$dados);
-        $where = "{$this->_primary} = '{$id}'";
+
+        $col = $this->translate($this->_primary);
+        $id = $this->quote($id);
+
+        $where = "{$col} = {$id}";
         return parent::update($dados, $where);
     }
 
