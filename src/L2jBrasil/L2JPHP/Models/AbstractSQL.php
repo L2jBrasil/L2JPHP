@@ -690,10 +690,6 @@ class AbstractSQL
             throw new RuntimeException("The model's table is not defined");
         }
 
-        if (is_array($dados)) {
-            $dados = (object)$dados;
-        }
-
         if ($where === 1 || $where === "1" || $where === true || strlen($where) == 0 || trim($where) == "") {
             throw new BadMethodCallException("A clausula where inválida: “{$where}”  em " . __CLASS__);
         }
