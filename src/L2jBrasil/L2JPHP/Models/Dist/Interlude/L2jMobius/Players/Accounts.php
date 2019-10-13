@@ -27,6 +27,7 @@ class Accounts extends AbstractBaseModel implements \L2jBrasil\L2JPHP\Models\Int
         "access_level" => "accessLevel",
         "lastIP" => "lastIP",
         "lastServer" => "lastServer",
+        "email" => "email",
     ];
     /*
     Columns:

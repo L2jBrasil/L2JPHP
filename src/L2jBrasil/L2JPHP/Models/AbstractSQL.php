@@ -9,8 +9,14 @@
 namespace L2jBrasil\L2JPHP\Models;
 
 
+use Application\Util;
+use BadMethodCallException;
+use Exception;
 use L2jBrasil\L2JPHP\ConfigSet;
 use L2jBrasil\L2JPHP\Connection\DBInstance;
+use PDOStatement;
+use RuntimeException;
+use stdClass;
 
 class AbstractSQL
 {
@@ -214,7 +220,7 @@ class AbstractSQL
 
     /**
      * @param $sql
-     * @return \PDOStatement
+     * @return PDOStatement
      */
     public function prepare($sql)
     {
@@ -254,7 +260,7 @@ class AbstractSQL
     public function insert($dados)
     {
         if (!$this->_table) {
-            throw new \RuntimeException("The model's table is not defined");
+            throw new RuntimeException("The model's table is not defined");
         }
 
         $valores = array();
@@ -339,13 +345,17 @@ class AbstractSQL
         $colunas = get_object_vars($this->getColumns());
 
 
+        if (count($colunas) == 0) {
+            return $dados;
+            throw new Exception("Select must be granted to site user to INFORMATION_SCHEMA");
+        }
         return array_intersect_key($dados, $colunas);
     }
 
     /**
      * Retorna objeto com todas as colunas e os valores padrões de cada uma
      * Formato chave/valor
-     * @return null|\stdClass
+     * @return null|stdClass
      */
     public function getColumns()
     {
@@ -355,7 +365,7 @@ class AbstractSQL
 
             $colunas = $this->query($sql)->FetchAll();
 
-            $obj = new \stdClass();
+            $obj = new stdClass();
             //Cria o objeto chave valor conforme expecificação
             foreach ($colunas as $value) {
                 $col = $value['COLUMN_NAME'];
@@ -531,7 +541,7 @@ class AbstractSQL
         //Inclui dados dados padrões de auditoria
         if ($auditoria) {
             $dataatual = date("Y-m-d H:i:s");
-            $usuario = \Application\Util::GetUsuarioLogado();
+            $usuario = Util::GetUsuarioLogado();
             $dados->__dateinsert = $dataatual;
             $dados->__dateativ = $dataatual;
             $dados->__userinsert = $usuario;
@@ -677,7 +687,7 @@ class AbstractSQL
     public function update($dados, $where)
     {
         if (!$this->_table) {
-            throw new \RuntimeException("The model's table is not defined");
+            throw new RuntimeException("The model's table is not defined");
         }
 
         if (is_array($dados)) {
@@ -685,7 +695,7 @@ class AbstractSQL
         }
 
         if ($where === 1 || $where === "1" || $where === true || strlen($where) == 0 || trim($where) == "") {
-            throw new \BadMethodCallException("A clausula where inválida: “{$where}”  em " . __CLASS__);
+            throw new BadMethodCallException("A clausula where inválida: “{$where}”  em " . __CLASS__);
         }
 
 
@@ -734,15 +744,15 @@ class AbstractSQL
      * Método que realiza o Delete de dados no sistema.
      * @param type $where
      * @return type
-     * @throws \BadMethodCallException
+     * @throws BadMethodCallException
      */
     public function delete($where)
     {
         if (!$this->_table) {
-            throw new \RuntimeException("The model's table is not defined");
+            throw new RuntimeException("The model's table is not defined");
         }
         if (!isset($this->_primary) && !is_null($this->_primary) && $this->_primary !== "") {
-            throw new \BadMethodCallException("Chave Primária não definida para " . __CLASS__);
+            throw new BadMethodCallException("Chave Primária não definida para " . __CLASS__);
         }
         $where = trim($where);
 
@@ -755,7 +765,7 @@ class AbstractSQL
                 $where = $this->_primary . " = $where";
             } else {
                 $type = gettype($where);
-                throw new \BadMethodCallException("Condição de exclusão não permitida($type) para  " . __CLASS__);
+                throw new BadMethodCallException("Condição de exclusão não permitida($type) para  " . __CLASS__);
             }
         } else {
             /**
@@ -768,7 +778,7 @@ class AbstractSQL
              * NULL -> inválido
              */
             if (!preg_match('/( |=|>|<|\()/', $where) || preg_match('/(WHERE)/i', $where)) {
-                throw new \BadMethodCallException("A clausula where inválida: “{$where}”  em " . __CLASS__);
+                throw new BadMethodCallException("A clausula where inválida: “{$where}”  em " . __CLASS__);
             }
         }
 
@@ -826,7 +836,7 @@ class AbstractSQL
     public function call($procedure)
     {
         if (!preg_match('/\(/', $procedure) || preg_match('/(CALL)/i', $procedure)) {
-            throw new \BadMethodCallException("Parâmetro de procedure inválido: “{$procedure}”  em " . __CLASS__);
+            throw new BadMethodCallException("Parâmetro de procedure inválido: “{$procedure}”  em " . __CLASS__);
         }
         $stmt = $this->getDB()->prepare("CALL $procedure");
         $stmt->execute();
