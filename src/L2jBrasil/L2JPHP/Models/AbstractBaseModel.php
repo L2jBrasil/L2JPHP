@@ -70,7 +70,7 @@ abstract class AbstractBaseModel extends AbstractSQL
         $cols = $this->translateAll($cols);
 
         return $this->select($cols)
-            ->where("{$this->_primary} == {$id}")
+            ->where("{$this->_primary} = {$id}")
             ->query()
             ->Fetch();
     }
