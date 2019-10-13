@@ -174,9 +174,10 @@ abstract class AbstractBaseModel extends AbstractSQL
     public function exists($col, $value)
     {
         $col = $this->translate($col);
+        $value = $this->quote($value);
 
         return $this->select($col)
-            ->where("{$col} ='{$value}''")
+            ->where("{$col} = {$value}")
             ->query()
             ->Fetch();
     }
@@ -190,10 +191,11 @@ abstract class AbstractBaseModel extends AbstractSQL
     public function checkUnique($col, $value)
     {
         $col = $this->translate($col);
+        $value = $this->quote($value);
 
 
         return $this->select([$col, "count(*) as Count"])
-            ->where("{$col} = '{$value}''")
+            ->where("{$col} = {$value}")
             ->groupby($col)
             ->having("count(*) > 1")
             ->query()
