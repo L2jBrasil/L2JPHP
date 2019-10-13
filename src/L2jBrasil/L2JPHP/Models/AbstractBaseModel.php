@@ -11,6 +11,7 @@ namespace L2jBrasil\L2JPHP\Models;
 use Exception;
 use L2jBrasil\L2JPHP\Models\Filter\QueryFilter;
 use PDO;
+use UnderflowException;
 
 abstract class AbstractBaseModel extends AbstractSQL
 {
@@ -19,6 +20,7 @@ abstract class AbstractBaseModel extends AbstractSQL
     protected $_primary;
 
     protected $_tableMap = [];
+    protected $_passencodemethod = "pack"; //TODO Create constant
 
 
     /**
@@ -210,6 +212,28 @@ abstract class AbstractBaseModel extends AbstractSQL
     {
         $conn = $this->getDB()->getConn()->connection();
         return $conn->quote($string);
+    }
+
+
+    /**
+     * Return encoded password
+     * @param $password
+     * @return string
+     */
+    public function encodepwd($password)
+    {
+        switch ($this->_passencodemethod) {
+            case "pack"://l2jserver
+                return base64_encode(pack('H*', sha1(trim($password))));
+            case "whirlpool":
+                return base64_encode(hash('whirlpool', trim($password), true));
+            case "sha1": //L2jMobius
+                return base64_encode(sha1($password, true));
+            default:
+                throw new UnderflowException("Not Imlemented encode {$this->_passencodemethod} ");
+
+        }
+
     }
 
 

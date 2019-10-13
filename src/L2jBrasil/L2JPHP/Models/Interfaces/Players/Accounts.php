@@ -21,4 +21,6 @@ interface Accounts
     public function ban($id);
 
     public function register($login, $pass, $data = []);
+
+    public function encodepwd($pwd);
 }

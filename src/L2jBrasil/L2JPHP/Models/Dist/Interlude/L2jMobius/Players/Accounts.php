@@ -61,15 +61,14 @@ class Accounts extends AbstractBaseModel implements \L2jBrasil\L2JPHP\Models\Int
     public function login($login, $password)
     {
         $login = $this->quote($login);
-        $pass1 = $this->quote(base64_encode(pack('H*', sha1(trim($password)))));
-        $pass2 = $this->quote(base64_encode(hash('whirlpool', trim($password), true)));
+        $pass1 = $this->quote($this->encodepwd($password));
 
 
         $loginCol = $this->translate("login");
         $passwordCol = $this->translate("password");
 
         $account = $this->select("*")
-            ->where("{$loginCol} = {$login}  AND ({$passwordCol} = {$pass1} OR {$passwordCol} = {$pass2})")
+            ->where("{$loginCol} = {$login}  AND {$passwordCol} = {$pass1} ")
             ->query()
             ->Fetch();
 
@@ -77,19 +76,32 @@ class Accounts extends AbstractBaseModel implements \L2jBrasil\L2JPHP\Models\Int
 
         if ($success) {
             $this->update($login, [
-                "lastIP" => $_SERVER['REMOTE_ADDR']
+                $this->translate("lastIP") => $_SERVER['REMOTE_ADDR']
             ]);
         }
 
         return $success;
     }
 
-    public function register($login, $pass, $data = [])
+    public function register($login, $password, $data = [])
     {
-        // TODO: Implement register() method.
+        if (!$this->exists($this->translate("login"), $login)) {
+            $dados = [
+                $this->translate("login") => $login,
+                $this->translate("password") => $this->encodepwd($password),
+            ];
 
-        //$sqlregister = "INSERT INTO `accounts` (`login`, `password`, `email`, `lastIP`) VALUES ('".$account."','".$password."','".$email."','".$_SERVER['REMOTE_ADDR']."')";
+            //Manipulate extra fields, eg email
+            if (count($data) > 0) {
+                foreach ($data as $col => $value) {
+                    $dados[$this->translate($col)] = $value;
+                }
+            }
 
+            $this->insert($dados);
 
+            return $this->get($login);
+        }
+        return false;
     }
 }
