@@ -176,7 +176,7 @@ abstract class AbstractBaseModel extends AbstractSQL
         $col = $this->translate($col);
 
         return $this->select($col)
-            ->where("{$col} == '{$value}''")
+            ->where("{$col} ='{$value}''")
             ->query()
             ->Fetch();
     }
@@ -193,7 +193,7 @@ abstract class AbstractBaseModel extends AbstractSQL
 
 
         return $this->select([$col, "count(*) as Count"])
-            ->where("{$col} == '{$value}''")
+            ->where("{$col} = '{$value}''")
             ->groupby($col)
             ->having("count(*) > 1")
             ->query()
