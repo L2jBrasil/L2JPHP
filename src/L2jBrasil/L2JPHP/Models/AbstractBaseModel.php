@@ -69,6 +69,8 @@ abstract class AbstractBaseModel extends AbstractSQL
     {
         $cols = $this->translateAll($cols);
 
+        $id = $this->quote($id);
+
         return $this->select($cols)
             ->where("{$this->_primary} = {$id}")
             ->query()
