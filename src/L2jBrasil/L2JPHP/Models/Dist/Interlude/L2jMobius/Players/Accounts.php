@@ -105,4 +105,5 @@ class Accounts extends AbstractBaseModel implements \L2jBrasil\L2JPHP\Models\Int
         }
         return false;
     }
+
 }

@@ -127,7 +127,7 @@ abstract class AbstractBaseModel extends AbstractSQL
         $dictionary = ($reverse) ? array_flip($this->_tableMap) : $this->_tableMap;
 
         if (array_key_exists($colName, $dictionary)) {
-            return $this->_tableMap[$colName];
+            return $dictionary[$colName];
         }
         return $colName;
     }

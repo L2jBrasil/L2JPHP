@@ -16,7 +16,9 @@ class Characters extends AbstractBaseModel implements \L2jBrasil\L2JPHP\Models\I
     protected $_primary = 'charId';
     protected $_tableMap = [
         "name" => "char_name",
-        "id" => "obj_Id"
+        "id" => "obj_Id",
+        "account_name" => "account_name",
+        "sex" => "sex"
     ];
 
     public function ban($id)
