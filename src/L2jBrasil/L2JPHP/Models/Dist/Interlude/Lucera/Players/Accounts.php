@@ -5,10 +5,11 @@
  * @license MIT
  */
 
-namespace L2jBrasil\L2JPHP\Models\Dist\Interlude\L2JSERVER\Players;
+namespace L2jBrasil\L2JPHP\Models\Dist\Interlude\Lucera\Players;
 
 
 use L2jBrasil\L2JPHP\Models\AbstractBaseModel;
+use L2jBrasil\L2JPHP\Models\AbstractSQL;
 
 class Accounts extends AbstractBaseModel implements \L2jBrasil\L2JPHP\Models\Interfaces\Players\Accounts
 {
@@ -16,17 +17,33 @@ class Accounts extends AbstractBaseModel implements \L2jBrasil\L2JPHP\Models\Int
     protected $_table = 'accounts';
     protected $_primary = 'login';
 
-
+    /**
+     * @var array
+     */
     protected $_tableMap = [
         "login" => "login",
         "password" => "password",
         "lastactive" => "lastactive",
-        "access_level" => "access_level",
+        "access_level" => "accessLevel",
         "lastIP" => "lastIP",
-        "lastServer" => "lastServer"
+        "lastServer" => "lastServer",
+        "email" => "email",
     ];
-
-
+    /*
+    Columns:
+    login varchar(45) PK
+    password varchar(45)
+    email varchar(255)
+    created_time timestamp
+    lastactive bigint(13) UN
+    accessLevel tinyint(4)
+    lastIP char(15)
+    lastServer tinyint(4)
+    */
+    /**
+     * @param $id
+     * @return bool|AbstractSQL|mixed
+     */
     public function ban($id)
     {
         return $this->update($id, [
@@ -88,4 +105,5 @@ class Accounts extends AbstractBaseModel implements \L2jBrasil\L2JPHP\Models\Int
         }
         return false;
     }
+
 }
