@@ -17,6 +17,7 @@ class Accounts extends DefaultAccounts implements \L2jBrasil\L2JPHP\Models\Inter
 
     protected $_table = 'accounts';
     protected $_primary = 'login';
+    protected $_passencodemethod = "sha1";
 
     /**
      * @var array
