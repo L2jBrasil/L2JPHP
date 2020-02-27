@@ -28,7 +28,7 @@ class Accounts extends DefaultAccounts implements \L2jBrasil\L2JPHP\Models\Inter
         "access_level" => "accessLevel",
         "lastIP" => "lastIP",
         "lastServer" => "lastServer",
-        "email" => "email",
+        "email" => "l2email",
     ];
     /*
     Columns:
