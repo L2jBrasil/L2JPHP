@@ -61,3 +61,13 @@ $CharactersModel->select(['character.id','account.name'])
 | aCis | | | | |
 | Lucera |10%| | | |
 
+
+# How to install
+Composer is a tool for dependency management in PHP https://getcomposer.org
+
+
+```
+composer require l2jbrasil/l2jphp
+```
+
+
