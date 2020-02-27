@@ -37,6 +37,27 @@ $CharactersModel->select(['character.id','account.name'])
 
 
 ```
+# Modules
 
+* Players
+  * Characters
+  * Account
+  * Iventory
+  * Wharehouse
+* Clan
+  * ClanData
+  * Ally
+* NPC
+  * RaidBoss
+  * GrandBoss
+  * NPC
+  * DropList
+# Coverage
 
+| Rev/Dist      | Interlude | H5  |Gracia|Classic|
+| ------------- |:---------:|:---:|:----:|:-----:|
+| L2jServer      |10%|  | | |
+| L2jMobius      |10%| | | |
+| aCis | | | | |
+| Lucera |10%| | | |
 

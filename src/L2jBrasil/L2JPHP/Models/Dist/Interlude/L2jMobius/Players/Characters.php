@@ -8,9 +8,9 @@
 namespace L2jBrasil\L2JPHP\Models\Dist\Interlude\L2jMobius\Players;
 
 
-use L2jBrasil\L2JPHP\Models\AbstractBaseModel;
+use L2jBrasil\L2JPHP\Models\Dist\Interlude\L2JSERVER\Players\Characters as DefaultCharacters;
 
-class Characters extends AbstractBaseModel implements \L2jBrasil\L2JPHP\Models\Interfaces\Players\Characters
+class Characters extends DefaultCharacters implements \L2jBrasil\L2JPHP\Models\Interfaces\Players\Characters
 {
     protected $_table = 'characters';
     protected $_primary = 'charId';
@@ -24,5 +24,10 @@ class Characters extends AbstractBaseModel implements \L2jBrasil\L2JPHP\Models\I
     public function ban($id)
     {
         // TODO: Implement ban() method.
+    }
+
+    public function getOnline($ttl = 0)
+    {
+        // TODO: Implement getOnline() method.
     }
 }

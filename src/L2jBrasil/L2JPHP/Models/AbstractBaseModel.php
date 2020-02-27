@@ -225,6 +225,11 @@ abstract class AbstractBaseModel extends AbstractSQL
 
     /**
      * Return encoded password
+     * use protecteted attribute $_passencodemethod to set encod method
+     * Available encodes
+     *  - pack uses Pack H*
+     *  - whirlpool uses hash with algorithm whirlpool]
+     *  - sha1 uses sha1 encription
      * @param $password
      * @return string
      */

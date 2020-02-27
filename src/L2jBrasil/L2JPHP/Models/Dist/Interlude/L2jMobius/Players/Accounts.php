@@ -8,10 +8,11 @@
 namespace L2jBrasil\L2JPHP\Models\Dist\Interlude\L2jMobius\Players;
 
 
-use L2jBrasil\L2JPHP\Models\AbstractBaseModel;
 use L2jBrasil\L2JPHP\Models\AbstractSQL;
+use L2jBrasil\L2JPHP\Models\Dist\Interlude\L2JSERVER\Players\Accounts as DefaultAccounts;
 
-class Accounts extends AbstractBaseModel implements \L2jBrasil\L2JPHP\Models\Interfaces\Players\Accounts
+
+class Accounts extends DefaultAccounts implements \L2jBrasil\L2JPHP\Models\Interfaces\Players\Accounts
 {
 
     protected $_table = 'accounts';
@@ -87,7 +88,7 @@ class Accounts extends AbstractBaseModel implements \L2jBrasil\L2JPHP\Models\Int
     public function register($login, $password, $data = [])
     {
         if (!$this->exists($this->translate("login"), $login)) {
-            $dados = [
+            $insertData = [
                 $this->translate("login") => $login,
                 $this->translate("password") => $this->encodepwd($password),
             ];
@@ -95,11 +96,11 @@ class Accounts extends AbstractBaseModel implements \L2jBrasil\L2JPHP\Models\Int
             //Manipulate extra fields, eg email
             if (count($data) > 0) {
                 foreach ($data as $col => $value) {
-                    $dados[$this->translate($col)] = $value;
+                    $insertData[$this->translate($col)] = $value;
                 }
             }
 
-            $this->insert($dados);
+            $this->insert($insertData);
 
             return $this->get($login);
         }

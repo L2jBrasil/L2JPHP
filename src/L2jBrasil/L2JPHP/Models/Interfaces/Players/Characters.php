@@ -22,4 +22,6 @@ interface Characters
 
     public function ban($id);
 
+    public function getOnline($ttl = 0);
+
 }

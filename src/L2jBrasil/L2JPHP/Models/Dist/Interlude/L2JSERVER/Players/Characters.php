@@ -23,4 +23,9 @@ class Characters extends AbstractBaseModel implements \L2jBrasil\L2JPHP\Models\I
     {
         // TODO: Implement ban() method.
     }
+
+    public function getOnline($ttl = 0)
+    {
+        // TODO: Implement getOnline() method.
+    }
 }
