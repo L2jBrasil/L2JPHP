@@ -240,7 +240,7 @@ abstract class AbstractBaseModel extends AbstractSQL
         switch ($this->_passencodemethod) {
             case "pack"://l2jserver
                 return base64_encode(pack('H*', sha1(trim($password))));
-            case "whirlpool":
+            case "whirlpool": //lucera
                 return base64_encode(hash('whirlpool', trim($password), true));
             case "sha1": //L2jMobius
                 return base64_encode(sha1($password, true));
