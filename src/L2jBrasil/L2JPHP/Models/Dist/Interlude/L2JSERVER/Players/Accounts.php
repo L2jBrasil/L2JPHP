@@ -9,6 +9,7 @@ namespace L2jBrasil\L2JPHP\Models\Dist\Interlude\L2JSERVER\Players;
 
 
 use L2jBrasil\L2JPHP\Models\AbstractBaseModel;
+use L2jBrasil\L2JPHP\Models\Dist\Interlude\L2JSERVER\Players\Characters as DefaultCharacters;
 
 class Accounts extends AbstractBaseModel implements \L2jBrasil\L2JPHP\Models\Interfaces\Players\Accounts
 {
@@ -91,6 +92,26 @@ class Accounts extends AbstractBaseModel implements \L2jBrasil\L2JPHP\Models\Int
 
     public function getCharacters($login)
     {
-        // TODO: Implement getCharacters() method.
+        $CharactersModel = new DefaultCharacters();
+
+        $accountCol = $CharactersModel->translate("account_name");
+        $accountName = $CharactersModel->quote($login);
+
+        $Characters = $CharactersModel->translateDataObj(
+            $CharactersModel->select("
+                        characters.* , 
+                        clanData.clan_name, clanData.clan_level, clanData.ally_name, 
+                        S1.class_id AS subclass1,
+                        S2.class_id AS subclass2,
+                        S3.class_id AS subclass3 
+			", $CharactersModel->getTableName(), "characters")
+                ->join("clan_data as clanData", "characters.clan_id = clanData.clan_id", "left") //TODO: Normalize
+                ->join("character_subclasses AS S1", "S1.char_obj_id = characters.obj_Id AND S1.class_index = '1'", "left") //TODO: Normalize
+                ->join("character_subclasses AS S2", "S1.char_obj_id = characters.obj_Id AND S1.class_index = '2'", "left") //TODO: Normalize
+                ->join("character_subclasses AS S3", "S1.char_obj_id = characters.obj_Id AND S1.class_index = '3'", "left") //TODO: Normalize
+                ->where("{$accountCol} = {$accountName}")
+                ->query()
+                ->FetchAll()
+            , true);
     }
 }
