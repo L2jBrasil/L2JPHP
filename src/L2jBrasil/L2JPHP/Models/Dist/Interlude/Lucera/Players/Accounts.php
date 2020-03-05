@@ -108,4 +108,37 @@ class Accounts extends DefaultAccounts implements \L2jBrasil\L2JPHP\Models\Inter
         return false;
     }
 
+    public function getCharacters($login)
+    {
+        /**
+         * @var Characters $CharactersModel
+         */
+        $CharactersModel = ($this->getModelFatory())::build('Players/Characters');
+
+        $accountColum = $CharactersModel->translate("account_name");
+        $accountName = $CharactersModel->quote($login);
+
+
+        //TODO implement Players/Account GetCharacters
+        $Characters = $CharactersModel->translateDataObj(
+            $CharactersModel->select("
+                        characters.* , 
+                        clanPledge.name as clan_name,
+                        clanData.clan_level,
+                        allyData.ally_name, 
+                        S1.class_id AS subclass1,
+                        S2.class_id AS subclass2,
+                        S3.class_id AS subclass3 
+			", $CharactersModel->getTableName(), "characters")
+                ->join("clan_data as clanData", "characters.clan_id = clanData.clan_id", "left") //TODO: Normalize
+                ->join("clan_subpledges as clanPledge", "clanPledge.clan_id = clanData.clan_id and clanPledge.type = 0", "left") //TODO: Normalize
+                ->join("ally_data as allyData", "allyData.ally_id = clanData.ally_id", "left") //TODO: Normalize
+                ->join("character_subclasses AS S1", "S1.char_obj_id = characters.obj_Id AND S1.class_index = '1'", "left") //TODO: Normalize
+                ->join("character_subclasses AS S2", "S1.char_obj_id = characters.obj_Id AND S1.class_index = '2'", "left") //TODO: Normalize
+                ->join("character_subclasses AS S3", "S1.char_obj_id = characters.obj_Id AND S1.class_index = '3'", "left") //TODO: Normalize
+                ->where("{$accountColum} = {$accountName}")
+                ->query()
+                ->FetchAll()
+            , true);
+    }
 }

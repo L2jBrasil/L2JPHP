@@ -88,4 +88,9 @@ class Accounts extends AbstractBaseModel implements \L2jBrasil\L2JPHP\Models\Int
         }
         return false;
     }
+
+    public function getCharacters($login)
+    {
+        // TODO: Implement getCharacters() method.
+    }
 }

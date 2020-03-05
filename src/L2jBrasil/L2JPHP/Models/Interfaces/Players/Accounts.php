@@ -22,5 +22,7 @@ interface Accounts
 
     public function register($login, $pass, $data = []);
 
+    public function getCharacters($login);
+
     public function encodepwd($pwd);
 }
