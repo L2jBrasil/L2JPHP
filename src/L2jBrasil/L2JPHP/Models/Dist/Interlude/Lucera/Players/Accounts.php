@@ -119,6 +119,9 @@ class Accounts extends DefaultAccounts implements \L2jBrasil\L2JPHP\Models\Inter
         return $CharactersModel->translateDataObj(
             $CharactersModel->select("
                         characters.* , 
+                        S0.level as level,
+                        S0.class_id as classid,
+                        0 as nobless,
                         clanPledge.name as clan_name,
                         clanData.clan_level,
                         allyData.ally_name
@@ -126,6 +129,10 @@ class Accounts extends DefaultAccounts implements \L2jBrasil\L2JPHP\Models\Inter
                 ->join("clan_data as clanData", "characters.clanid = clanData.clan_id", "left") //TODO: Normalize
                 ->join("clan_subpledges as clanPledge", "clanPledge.clan_id = clanData.clan_id and clanPledge.type = 0", "left") //TODO: Normalize
                 ->join("ally_data as allyData", "allyData.ally_id = clanData.ally_id", "left") //TODO: Normalize
+                ->join("character_subclasses AS S0", "S0.char_obj_id = characters.obj_Id AND S0.isBase = '1'", "left") //TODO: Normalize
+                // ->join("character_subclasses AS S1", "S1.char_obj_id = characters.obj_Id AND S1.class_index = '1'", "left") //TODO: Normalize
+                //  ->join("character_subclasses AS S2", "S1.char_obj_id = characters.obj_Id AND S1.class_index = '2'", "left") //TODO: Normalize
+                //  ->join("character_subclasses AS S3", "S1.char_obj_id = characters.obj_Id AND S1.class_index = '3'", "left") //TODO: Normalize
                 ->where("{$accountCol} = {$accountName}")
                 ->query()
                 ->FetchAll()
