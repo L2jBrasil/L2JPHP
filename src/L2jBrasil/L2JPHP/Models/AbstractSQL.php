@@ -47,8 +47,7 @@ class AbstractSQL
 
     /**
      * AbstractSQL constructor.
-     * @param ConfigSet $config
-     *
+     * @param ConfigSet|null $configset
      */
     public function __construct(ConfigSet $configset = null)
     {
@@ -56,6 +55,12 @@ class AbstractSQL
             $configset = ConfigSet::getDefaultInstance();
         }
         $this->config = $configset;
+    }
+
+
+    public function getConfigSet()
+    {
+        return $this->config;
     }
 
     /**

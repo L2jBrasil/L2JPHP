@@ -92,7 +92,7 @@ class Accounts extends AbstractBaseModel implements \L2jBrasil\L2JPHP\Models\Int
 
     public function getCharacters($login)
     {
-        $CharactersModel = new DefaultCharacters();
+        $CharactersModel = new DefaultCharacters(parent::getConfigSet());
 
         $accountCol = $CharactersModel->translate("account_name");
         $accountName = $CharactersModel->quote($login);

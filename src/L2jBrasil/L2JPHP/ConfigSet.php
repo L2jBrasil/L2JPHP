@@ -4,7 +4,9 @@
 namespace L2jBrasil\L2JPHP;
 
 
-class ConfigSet extends \stdClass
+use stdClass;
+
+class ConfigSet extends stdClass
 {
 
     public  $_dist =  "L2JSERVER";
@@ -16,6 +18,7 @@ class ConfigSet extends \stdClass
     public  $_dbName =  "l2jdb";
     public  $_dbUser =  "root";
     public  $_dbPwd = "";
+    public $_instance = null;
 
 
     public final static function getDefaultInstance()

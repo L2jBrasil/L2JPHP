@@ -111,7 +111,7 @@ class Accounts extends DefaultAccounts implements \L2jBrasil\L2JPHP\Models\Inter
 
     public function getCharacters($login)
     {
-        $CharactersModel = new Characters();
+        $CharactersModel = new Characters(parent::getConfigSet());
 
         $accountCol = $CharactersModel->translate("account_name");
         $accountName = $CharactersModel->quote($login);
