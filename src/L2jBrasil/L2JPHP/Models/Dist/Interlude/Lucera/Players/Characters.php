@@ -26,8 +26,28 @@ class Characters extends DefaultCharacters implements \L2jBrasil\L2JPHP\Models\I
         // TODO: Implement ban() method.
     }
 
-    public function getOnline($ttl = 0)
+
+    /**
+     *
+     */
+    public function giveItem($ownderId, $itemId, $count = 1, $extra = [])
     {
-        // TODO: Implement getOnline() method.
+        // INSERT INTO `l2jdb`.`items_delayed`
+        // ( `owner_id`, `item_id`, `count`, `description`)
+        // VALUES ('268477601',1, '57', '99', 'teste');
+        /*
+         Table: items_delayed
+            Columns:
+            payment_id int AI PK
+            owner_id int
+            item_id smallint UN
+            count int UN
+            enchant_level smallint UN
+            attribute smallint
+            attribute_level smallint
+            flags int
+            payment_status tinyint UN
+            description varchar(255)
+         * */
     }
 }

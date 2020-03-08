@@ -24,8 +24,10 @@ class Characters extends AbstractBaseModel implements \L2jBrasil\L2JPHP\Models\I
         // TODO: Implement ban() method.
     }
 
-    public function getOnline($ttl = 0)
+    public function getOnline()
     {
-        // TODO: Implement getOnline() method.
+        $onlineCol = $this->translate('online');
+        $where = "{$onlineCol}  = 1";
+        return $this->count($where);
     }
 }
