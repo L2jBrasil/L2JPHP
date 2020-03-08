@@ -13,7 +13,7 @@ use L2jBrasil\L2JPHP\Models\Dist\Interlude\L2JSERVER\Players\Characters as Defau
 class Characters extends DefaultCharacters implements \L2jBrasil\L2JPHP\Models\Interfaces\Players\Characters
 {
     protected $_table = 'characters';
-    protected $_primary = 'charId';
+    protected $_primary = 'obj_Id';
     protected $_tableMap = [
         "name" => "char_name",
         "id" => "obj_Id",
