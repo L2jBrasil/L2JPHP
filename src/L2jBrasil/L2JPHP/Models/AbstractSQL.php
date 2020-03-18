@@ -513,13 +513,6 @@ class AbstractSQL
 
         $ret = $this->query($sql, $valores);
 
-        /**
-         * @vcpablo - 12/04/2017
-         * Retorna sempre 1, tanto quando registro foi criado quanto quando for atualizado.
-         * Diferentemente do insert padrão, que retorna o id do último registro inserido.
-         *
-         * Ao utilizar esta função, verificar que o id do registro não é retornado.
-         */
         return $ret->lastInsertId() > 0;
     }
 
