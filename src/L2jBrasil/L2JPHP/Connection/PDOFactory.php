@@ -8,6 +8,10 @@
 namespace L2jBrasil\L2JPHP\Connection;
 
 
+use BadMethodCallException;
+use Exception;
+use PDO;
+
 class PDOFactory
 {
 
@@ -19,10 +23,10 @@ class PDOFactory
     private $connectionID;
 
     public function __construct($dsn, $username = "", $password = "",
-                                array $driver_options = [\PDO::ATTR_TIMEOUT, '5',
-                                    \PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8",
-                                    \PDO::ATTR_EMULATE_PREPARES, false,
-                                    \PDO::ATTR_STRINGIFY_FETCHES, false])
+                                array $driver_options = [PDO::ATTR_TIMEOUT, '5',
+                                    PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8",
+                                    PDO::ATTR_EMULATE_PREPARES, false,
+                                    PDO::ATTR_STRINGIFY_FETCHES, false])
     {
         $this->dsn = $dsn;
         $this->username = $username;
@@ -63,15 +67,19 @@ class PDOFactory
 
     public function connect()
     {
-        $this->pdo = new \PDO($this->dsn, $this->username, $this->password, $this->driver_options);
+        try {
+            $this->pdo = new PDO($this->dsn, $this->username, $this->password, $this->driver_options);
 
-        $this->pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-        $this->pdo->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE, \PDO::FETCH_ASSOC);
-        $this->pdo->setAttribute(\PDO::ATTR_TIMEOUT, 600);
-        $this->pdo->setAttribute(\PDO::ATTR_PERSISTENT, 1);
+            $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $this->pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+            $this->pdo->setAttribute(PDO::ATTR_TIMEOUT, 600);
+            $this->pdo->setAttribute(PDO::ATTR_PERSISTENT, 1);
 
-        $this->connectionID = $this->pdo->query('SELECT CONNECTION_ID()')->fetch(\PDO::FETCH_COLUMN);
-        return $this->pdo;
+            $this->connectionID = $this->pdo->query('SELECT CONNECTION_ID()')->fetch(PDO::FETCH_COLUMN);
+            return $this->pdo;
+        } catch (Exception  $e) {
+            throw new Exception("DB Connection failure", $e->getCode(), $e);
+        }
     }
 
     public function __call($method, array $arguments)
@@ -88,7 +96,7 @@ class PDOFactory
             Apenas php7
         }
         */
-        catch (\Exception $e) {
+        catch (Exception $e) {
 
             switch (true) {
                 case (strpos($e->getMessage(), 'server has gone away') !== false):
@@ -109,7 +117,7 @@ class PDOFactory
         } else if (method_exists($this, $method)) {
             return call_user_func_array([$this, $method], $arguments);
         } else {
-            throw  new \BadMethodCallException("Undefined method '{$method}' in " . __NAMESPACE__ . __CLASS__);
+            throw  new BadMethodCallException("Undefined method '{$method}' in " . __NAMESPACE__ . __CLASS__);
         }
 
         return call_user_func_array(array($this->connection(), $method), $arguments);
@@ -117,10 +125,10 @@ class PDOFactory
 
     protected function connection()
     {
-        if ($this->pdo instanceof \PDO) {
+        if ($this->pdo instanceof PDO) {
             return $this->pdo;
         }
-        return $this->pdo instanceof \PDO ? $this->pdo : $this->connect();
+        return $this->pdo instanceof PDO ? $this->pdo : $this->connect();
     }
 
     public function reconnect()
