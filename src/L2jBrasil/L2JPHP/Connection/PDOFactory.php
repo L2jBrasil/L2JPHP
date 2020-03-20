@@ -9,8 +9,10 @@ namespace L2jBrasil\L2JPHP\Connection;
 
 
 use BadMethodCallException;
+use Error;
 use Exception;
 use PDO;
+use PDOException;
 
 class PDOFactory
 {
@@ -77,7 +79,7 @@ class PDOFactory
 
             $this->connectionID = $this->pdo->query('SELECT CONNECTION_ID()')->fetch(PDO::FETCH_COLUMN);
             return $this->pdo;
-        } catch (Exception  $e) {
+        } catch (PDOException | Exception | Error $e) {
             throw new Exception("DB Connection failure", $e->getCode(), $e);
         }
     }
