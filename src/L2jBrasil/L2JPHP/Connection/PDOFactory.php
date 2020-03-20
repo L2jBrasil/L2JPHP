@@ -72,14 +72,22 @@ class PDOFactory
         try {
             $this->pdo = new PDO($this->dsn, $this->username, $this->password, $this->driver_options);
 
-            $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            if (!$this->pdo) {
+                throw new Exception("DB Connection failure", $e->getCode(), $e);
+            }
+
+            $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_SILENT);
             $this->pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
             $this->pdo->setAttribute(PDO::ATTR_TIMEOUT, 600);
             $this->pdo->setAttribute(PDO::ATTR_PERSISTENT, 1);
 
             $this->connectionID = $this->pdo->query('SELECT CONNECTION_ID()')->fetch(PDO::FETCH_COLUMN);
+
+
             return $this->pdo;
-        } catch (PDOException | Exception | Error $e) {
+
+
+        } catch (PDOException | Exception | Error  $e) {
             throw new Exception("DB Connection failure", $e->getCode(), $e);
         }
     }
