@@ -73,7 +73,7 @@ class PDOFactory
             $this->pdo = new PDO($this->dsn, $this->username, $this->password, $this->driver_options);
 
             if (!$this->pdo) {
-                throw new Exception("DB Connection failure", $e->getCode(), $e);
+                throw new Exception("DB Connection failure");
             }
 
             $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_SILENT);
