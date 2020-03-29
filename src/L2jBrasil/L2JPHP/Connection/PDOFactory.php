@@ -27,8 +27,8 @@ class PDOFactory
     public function __construct($dsn, $username = "", $password = "",
                                 array $driver_options = [PDO::ATTR_TIMEOUT, '5',
                                     PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8",
-                                    PDO::ATTR_EMULATE_PREPARES, false,
-                                    PDO::ATTR_STRINGIFY_FETCHES, false])
+                                    PDO::ATTR_EMULATE_PREPARES => true,
+                                    PDO::ATTR_STRINGIFY_FETCHES => false])
     {
         $this->dsn = $dsn;
         $this->username = $username;
