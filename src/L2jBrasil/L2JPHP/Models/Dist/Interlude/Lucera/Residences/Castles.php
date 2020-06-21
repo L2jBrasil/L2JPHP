@@ -36,14 +36,14 @@ class Castles extends AbstractBaseModel implements  \L2jBrasil\L2JPHP\Models\Int
     {
 
         return $this->select(["castle.id",
-				"castle.name",
-				"from_unixtime(castle.siege_date) as siege_date",
+				"castle.name as castle",
+				"from_unixtime(castle.siege_date/1000) as siege_date",
 				"castle.tax_percent AS tax",
 				"leader.char_name leader",
-				"clan_pledge.name",
-				"ally.ally_name"], $this->getTableName() . "as castle")
+				"clan_pledge.name as clan_name",
+				"ally.ally_name"], $this->getTableName())
             ->joinLeft("clan_data as clan", "clan.hasCastle = castle.id")
-            ->joinLeft("clan_subpledges as clan_pledge","clan_pledge.clan_id = clan.clan_id and clan_subpledges.type = 0")
+            ->joinLeft("clan_subpledges as clan_pledge","clan_pledge.clan_id = clan.clan_id and clan_pledge.type = 0")
             ->joinLeft("ally_data as ally","clan.ally_id = ally.ally_id")
             ->joinLeft("characters as leader","leader.obj_Id = clan_pledge.leader_id")
             ->query()
