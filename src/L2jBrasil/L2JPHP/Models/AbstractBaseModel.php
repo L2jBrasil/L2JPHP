@@ -158,8 +158,12 @@ abstract class AbstractBaseModel extends AbstractSQL
      * @param array $data
      * @return array
      */
-    public function translateDataObj(array $dados, $reverse = false)
+    public function translateDataObj($dados, $reverse = false)
     {
+        if(is_object($dados)){
+            $dados = (array) $dados;
+        }
+
         $translated = [];
         foreach ($dados as $key => $value) {
             if(is_object($value)||is_array($value)){

@@ -5,12 +5,12 @@
  * @license MIT
  */
 
-namespace L2jBrasil\L2JPHP\Models\Dist\Interlude\Lucera\Players;
+namespace L2jBrasil\L2JPHP\Models\Dist\Classic\Lucera\Players;
 
 
 
 use L2jBrasil\L2JPHP\Models\AbstractSQL;
-use L2jBrasil\L2JPHP\Models\Dist\Interlude\Lucera\Players\Characters;
+use L2jBrasil\L2JPHP\Models\Dist\Classic\Lucera\Players\Characters;
 use L2jBrasil\L2JPHP\Models\Dist\Interlude\L2JSERVER\Players\Accounts as DefaultAccounts;
 
 class Accounts extends DefaultAccounts implements \L2jBrasil\L2JPHP\Models\Interfaces\Players\Accounts
