@@ -124,7 +124,7 @@ class DBInstance
 
         switch ($driver){
             case "mysql":
-                return [PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"];
+                return [\PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"];
             case "dblib": //mssql
             default:
                 return [];
