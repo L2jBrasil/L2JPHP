@@ -99,7 +99,7 @@ class DBInstance
 
         if (self::$connection == null || !(self::$connection instanceof PDOFactory)) {
             $dsn = self::$_driver . ":host=" . self::$_host . ":" . self::$_port . ";dbname=" . self::$_dbname;
-            self::$connection = new PDOFactory($dsn, self::$_user, self::$_pwd);
+            self::$connection = new PDOFactory($dsn, self::$_user, self::$_pwd, self::getOptionsByDriver(self::$_driver));
             self::$connection->connect();
 
             if (self::$connection) {
@@ -119,6 +119,18 @@ class DBInstance
         return self::$connection;
     }
 
+
+    private static function getOptionsByDriver($driver){
+
+        switch ($driver){
+            case "mysql":
+                return [PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"];
+            case "dblib": //mssql
+            default:
+                return [];
+        }
+
+    }
     /**
      * Muda o banco de dados selecionado (multi-db support)
      * @param $dbname

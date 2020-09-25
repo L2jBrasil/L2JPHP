@@ -25,15 +25,18 @@ class PDOFactory
     private $connectionID;
 
     public function __construct($dsn, $username = "", $password = "",
-                                array $driver_options = [PDO::ATTR_TIMEOUT, '5',
-                                    PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8",
-                                    PDO::ATTR_EMULATE_PREPARES => true,
-                                    PDO::ATTR_STRINGIFY_FETCHES => false])
+                                array $driver_options = [])
     {
+
+        $defaultDriverOptions = [PDO::ATTR_TIMEOUT, '5',
+            PDO::ATTR_EMULATE_PREPARES => true,
+            PDO::ATTR_STRINGIFY_FETCHES => false];
+
+
         $this->dsn = $dsn;
         $this->username = $username;
         $this->password = $password;
-        $this->driver_options = $driver_options;
+        $this->driver_options = array_merge($defaultDriverOptions,$driver_options);
     }
 
     public function disconnect()

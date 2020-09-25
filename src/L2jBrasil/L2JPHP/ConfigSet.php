@@ -12,7 +12,7 @@ class ConfigSet extends stdClass
     public  $_dist =  "L2JSERVER";
     public  $_version =  "Interlude";
     public  $_salt =  'change_it_for_something_else';
-    public  $_dbDriver = "mysql";
+    public  $_dbDriver = "mysql"; //dblib para l2off
     public  $_dbHost = "localhost";
     public  $_dbPort =  3306;
     public  $_dbName =  "l2jdb";

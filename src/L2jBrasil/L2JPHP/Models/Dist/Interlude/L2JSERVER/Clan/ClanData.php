@@ -2,7 +2,7 @@
 
 namespace L2jBrasil\L2JPHP\Models\Dist\Interlude\L2JSERVER\Clan;
 
-class ClanData  implements \L2jBrasil\L2JPHP\Models\Interfaces\Clan\ClanData
+class ClanData  extends AbstractBaseModel implements \L2jBrasil\L2JPHP\Models\Interfaces\Clan\ClanData
 {
 
     public function all()

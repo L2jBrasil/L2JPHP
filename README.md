@@ -60,6 +60,7 @@ $CharactersModel->select(['character.id','account.name'])
 | L2jMobius      |10%| | | |
 | aCis | | | | |
 | Lucera |10%| | | |
+| L2OFF |1%| | | |
 
 
 # How to install

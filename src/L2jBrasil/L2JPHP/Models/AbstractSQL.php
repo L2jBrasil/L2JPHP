@@ -30,18 +30,12 @@ class AbstractSQL
     protected $_order = false;
     protected $_limit = false;
     protected $_having = false;
-    protected $_softdelete = true;
     private $_dbname;
-    private $_host;
-    private $_user;
-    private $_pwd;
-    private $_driver;
     private $_db;
     private $_stmt;
     private $_sql = "";
     private $_where = array();
     private $_join = array();
-    private $_mysqlilink = null;
     private $_tableCols = null;
     private $_tableSchema = null;
 

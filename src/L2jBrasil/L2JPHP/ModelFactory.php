@@ -25,6 +25,11 @@ class ModelFactory
             $configset = ConfigSet::getDefaultInstance();
         }
 
+        //TODO : Create more elgant way to define db Driver per model
+        if($configset->_dist == "L2OFF" && $configset->_dbDriver != "dblib"){
+            throw new \Exception("L2OFF require mssql compatible driver, such as dblib");
+        }
+
         self::$_configset = $configset;
     }
 

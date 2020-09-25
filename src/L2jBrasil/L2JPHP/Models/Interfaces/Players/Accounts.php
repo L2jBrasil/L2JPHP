@@ -25,4 +25,6 @@ interface Accounts
     public function getCharacters($login);
 
     public function encodepwd($pwd);
+
+    public function login($login, $password);
 }
