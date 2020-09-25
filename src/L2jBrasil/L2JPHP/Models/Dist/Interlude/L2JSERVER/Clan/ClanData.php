@@ -1,6 +1,7 @@
 <?php
 
 namespace L2jBrasil\L2JPHP\Models\Dist\Interlude\L2JSERVER\Clan;
+use L2jBrasil\L2JPHP\Models\AbstractBaseModel;
 
 class ClanData  extends AbstractBaseModel implements \L2jBrasil\L2JPHP\Models\Interfaces\Clan\ClanData
 {
