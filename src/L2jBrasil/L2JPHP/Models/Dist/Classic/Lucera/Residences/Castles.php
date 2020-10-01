@@ -12,24 +12,27 @@ class Castles extends AbstractBaseModel implements  \L2jBrasil\L2JPHP\Models\Int
     protected $_table = 'castle';
     protected $_primary = 'id';
     protected $_tableMap = [
-        "name" => "name",
-        "id" => "id",
         "tax" => "tax_percent",
         "vault" => "treasury",
-        "last_siege_date" => "last_siege_date",
-        "own_date" => "own_date",
-        "siege_date" => "siege_date",
-        "reward_count" => "reward_count",
     ];
 
-    public function ban($id)
-    {
-        // TODO: Implement ban() method.
-    }
 
-    public function status()
+    public function status($castleId)
     {
-        // TODO: Implement status() method.
+        return $this->select(["castle.id",
+            "castle.name as castle",
+            "from_unixtime(castle.siege_date/1000) as siege_date",
+            "castle.tax_percent AS tax",
+            "leader.char_name leader",
+            "clan_pledge.name as clan_name",
+            "ally.ally_name"], $this->getTableName())
+            ->joinLeft("clan_data as clan", "clan.hasCastle = castle.id")
+            ->joinLeft("clan_subpledges as clan_pledge","clan_pledge.clan_id = clan.clan_id and clan_pledge.type = 0")
+            ->joinLeft("ally_data as ally","clan.ally_id = ally.ally_id")
+            ->joinLeft("characters as leader","leader.obj_Id = clan_pledge.leader_id")
+            ->where("castle.id = '{$castleId}'") //you may use bind here
+            ->query()
+            ->Fetch();
     }
 
     public function siege()

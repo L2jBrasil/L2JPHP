@@ -15,7 +15,7 @@ interface Castles
 
     public function update($id, $data);
 
-    public function status();
+    public function status($castleId);
 
     public function siege();
 
