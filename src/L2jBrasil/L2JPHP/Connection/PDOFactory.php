@@ -29,7 +29,7 @@ class PDOFactory
     {
 
         $defaultDriverOptions = [PDO::ATTR_TIMEOUT, '5',
-            PDO::ATTR_EMULATE_PREPARES => true,
+            PDO::ATTR_EMULATE_PREPARES => false,
             PDO::ATTR_STRINGIFY_FETCHES => false];
 
 
